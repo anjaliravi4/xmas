@@ -1,51 +1,47 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-
-interface HelloResponse {
-    message: string;
-}
+import React from "react";
+import PhotoAlbum from "./components/PhotoAlbum";
+import FamilyCalendar from "./components/Calendar.tsx";
+import WeatherWidget from "./components/Weather";
+import DailyMessage from "./components/Message.tsx";
+import TodoList from "./components/ToDo.tsx";
 
 function App() {
-    const [backendMessage, setBackendMessage] = useState<string>("Loading...");
-    const [error, setError] = useState<string>("");
-
-    useEffect(() => {
-        fetch("http://127.0.0.1:4000/api/hello")
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
-                }
-                return res.json();
-            })
-            .then((data: HelloResponse) => {
-                setBackendMessage(data.message);
-            })
-            .catch((err) => {
-                console.error(err);
-                setError(`Error connecting to backend: ${(err as Error).message}`);
-                setBackendMessage(""); // clear loading message
-            });
-    }, []);
-
     return (
         <div className="App" style={{ padding: "2rem", fontFamily: "sans-serif" }}>
             <h1>🎄 Dad Dashboard</h1>
 
-            {error && (
-                <div style={{ color: "red", marginBottom: "1rem" }}>
-                    {error}
-                </div>
-            )}
-
-            {!error && (
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                    gap: "1.5rem",
+                    marginTop: "1.5rem",
+                }}
+            >
                 <div>
-                    <p><strong>Backend says:</strong> {backendMessage}</p>
+                    <h2>Photo Album</h2>
+                    <PhotoAlbum />
                 </div>
-            )}
 
-            {/* Future widgets will go here */}
-            <div style={{ marginTop: "2rem" }}>
-                <p>Weather, Calendar, Photos, Stocks, To-Do List…</p>
+                <div>
+                    <h2>Family Calendar</h2>
+                    <FamilyCalendar />
+                </div>
+
+                <div>
+                    <h2>Weather</h2>
+                    <WeatherWidget />
+                </div>
+
+                <div>
+                    <h2>Daily Message</h2>
+                    <DailyMessage />
+                </div>
+
+                <div>
+                    <h2>To-Do List</h2>
+                    <TodoList />
+                </div>
             </div>
         </div>
     );
