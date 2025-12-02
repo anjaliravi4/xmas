@@ -1,49 +1,49 @@
 import React from "react";
+import "./App.css";
 import PhotoAlbum from "./components/PhotoAlbum";
-import FamilyCalendar from "./components/Calendar.tsx";
+import FamilyCalendar from "./components/Calendar";
 import WeatherWidget from "./components/Weather";
-import DailyMessage from "./components/Message.tsx";
-import TodoList from "./components/ToDo.tsx";
+import DailyMessage from "./components/Message";
+import TodoList from "./components/ToDo";
 
 function App() {
     return (
-        <div className="App" style={{ padding: "2rem", fontFamily: "sans-serif" }}>
-            <h1>🎄 Dad Dashboard</h1>
+        <div className="dad-dashboard">
+            <header className="dashboard-header">
+                <h1>🎄 Dad Dashboard</h1>
+                <p className="dashboard-subtitle">
+                    A little home base for your day.
+                </p>
+            </header>
 
-            <div
-                style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                    gap: "1.5rem",
-                    marginTop: "1.5rem",
-                }}
-            >
-                <div>
-                    <h2>Photo Album</h2>
+            <main className="dashboard-grid">
+                <section className="widget-card">
+                    <h2 className="widget-title">Photo Album</h2>
                     <PhotoAlbum />
-                </div>
+                </section>
 
-                <div>
-                    <h2>Family Calendar</h2>
+                <section className="widget-card">
+                    <h2 className="widget-title">Family Calendar</h2>
                     <FamilyCalendar />
-                </div>
+                </section>
 
-                <div>
-                    <h2>Weather</h2>
+                <section className="widget-card">
+                    <h2 className="widget-title">Weather</h2>
                     <WeatherWidget />
-                </div>
+                </section>
 
-                <div>
-                    <h2>Daily Message</h2>
+                <section className="widget-card">
+                    <h2 className="widget-title">Daily Message</h2>
                     <DailyMessage />
-                </div>
+                </section>
 
-                <div>
-                    <h2>To-Do List</h2>
+                <section className="widget-card">
+                    <h2 className="widget-title">To-Do List</h2>
                     <TodoList />
-                </div>
-            </div>
+                </section>
+            </main>
         </div>
+
     );
 }
 
