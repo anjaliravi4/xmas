@@ -1,134 +1,331 @@
-/* Overall page layout */
-.dad-dashboard {
-    min-height: 100vh;
-    padding: 2rem;
-    box-sizing: border-box;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: radial-gradient(circle at top, #f8fafc 0, #e2e8f0 40%, #cbd5f5 100%);
-    color: #0f172a;
+/* ---------------------------
+   Dad Dashboard — App.css
+   --------------------------- */
+
+:root {
+    --bg1: #0b1220;
+    --bg2: #111b31;
+
+    --card: rgba(255, 255, 255, 0.08);
+    --card-2: rgba(255, 255, 255, 0.06);
+    --border: rgba(255, 255, 255, 0.14);
+
+    --text: rgba(255, 255, 255, 0.92);
+    --muted: rgba(255, 255, 255, 0.72);
+
+    --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    --radius: 18px;
 }
 
-/* Header */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    color: var(--text);
+    background: radial-gradient(1200px 600px at 20% 10%, #1a2a52 0%, transparent 60%),
+    radial-gradient(900px 500px at 85% 25%, #3a1f3d 0%, transparent 55%),
+    linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 100%);
+}
+
+a {
+    color: inherit;
+}
+
+/* ---------------------------
+   Layout
+   --------------------------- */
+
+.dad-dashboard {
+    min-height: 100vh;
+    padding: 28px 18px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 .dashboard-header {
-    max-width: 1100px;
-    margin: 0 auto 1.5rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+    padding: 18px 18px 10px;
 }
 
 .dashboard-header h1 {
     margin: 0;
-    font-size: 2.4rem;
+    font-size: 34px;
+    letter-spacing: -0.02em;
 }
 
 .dashboard-subtitle {
-    margin-top: 0.4rem;
-    color: #475569;
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
 }
 
-/* Grid layout for widgets */
 .dashboard-grid {
-    max-width: 1100px;
-    margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.5rem;
-    align-items: start;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 14px;
 }
 
-/* Widget “cards” */
+/* Each widget card spans 6 cols on desktop, 12 on mobile */
 .widget-card {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 16px;
-    padding: 1.2rem 1.4rem;
-    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
-    border: 1px solid rgba(148, 163, 184, 0.35);
-    backdrop-filter: blur(4px);
+    grid-column: span 6;
+    background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 16px 14px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(8px);
 }
 
 .widget-title {
-    margin: 0 0 0.8rem 0;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #0f172a;
+    margin: 0 0 12px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: rgba(255, 255, 255, 0.9);
 }
 
-/* Make embedded iframes (calendar, photos) adapt to card width */
-.widget-card iframe {
-    width: 100%;
-    border: 0;
+/* Make calendar or photo album optionally bigger if you want:
+   add className="widget-card wide" to a section */
+.widget-card.wide {
+    grid-column: span 12;
 }
-/* Weather widget layout */
+
+/* Responsive */
+@media (max-width: 900px) {
+    .widget-card {
+        grid-column: span 12;
+    }
+    .dashboard-header h1 {
+        font-size: 30px;
+    }
+}
+
+/* ---------------------------
+   Generic widget helpers
+   --------------------------- */
+
+.widget-card p {
+    color: var(--muted);
+}
+
+button,
+input {
+    font: inherit;
+}
+
+/* ---------------------------
+   Weather widget (matches your component classNames)
+   --------------------------- */
+
 .weather-widget {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 10px;
 }
 
-/* Header row */
 .weather-header-row {
     display: grid;
-    grid-template-columns: 0.9fr 1.4fr 2fr;
-    font-size: 0.8rem;
+    grid-template-columns: 0.8fr 1.2fr 1.4fr;
+    gap: 10px;
+    font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #64748b;
-    margin-bottom: 0.2rem;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 0 4px;
 }
 
-.weather-header-col {
-    font-weight: 600;
-}
-
-/* Data rows */
 .weather-list {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 10px;
 }
 
 .weather-row {
     display: grid;
-    grid-template-columns: 0.9fr 1.4fr 2fr;
-    align-items: baseline;
-    font-size: 0.9rem;
-    padding: 0.35rem 0.45rem;
-    border-radius: 10px;
-    background: #f8fafc;
-    border: 1px solid rgba(148, 163, 184, 0.3);
+    grid-template-columns: 0.8fr 1.2fr 1.4fr;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.14);
 }
 
 .weather-label {
-    font-weight: 600;
-    color: #0f172a;
+    font-weight: 700;
 }
 
 .weather-location {
-    color: #334155;
+    color: rgba(255, 255, 255, 0.82);
 }
 
 .weather-info {
     display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
+    gap: 10px;
+    align-items: baseline;
+    justify-content: flex-start;
 }
 
 .weather-temp {
-    font-weight: 600;
-    color: #0f172a;
+    font-weight: 800;
 }
 
 .weather-description {
-    font-size: 0.8rem;
-    color: #64748b;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 13px;
 }
 
+/* ---------------------------
+   To-Do widget (from the component I gave you)
+   --------------------------- */
 
-/* Basic responsive tweak for very small screens */
-@media (max-width: 600px) {
-    .dad-dashboard {
-        padding: 1.2rem;
-    }
+.todo-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 
-    .dashboard-header h1 {
-        font-size: 2rem;
-    }
+.todo-add-row {
+    display: flex;
+    gap: 10px;
+}
+
+.todo-input {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    outline: none;
+}
+
+.todo-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.todo-add-btn {
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text);
+    cursor: pointer;
+    transition: transform 0.05s ease, background 0.15s ease;
+}
+
+.todo-add-btn:active {
+    transform: scale(0.98);
+}
+
+.todo-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.todo-filters {
+    display: flex;
+    gap: 8px;
+}
+
+.todo-filter-btn {
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    opacity: 0.82;
+}
+
+.todo-filter-btn.active {
+    background: rgba(255, 255, 255, 0.14);
+    opacity: 1;
+}
+
+.todo-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.todo-remaining {
+    opacity: 0.85;
+    color: var(--muted);
+}
+
+.todo-action-btn {
+    padding: 6px 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.14);
+}
+
+.todo-item-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.todo-text {
+    line-height: 1.2;
+}
+
+.todo-item.done .todo-text {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.todo-delete-btn {
+    border: none;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 16px;
+    opacity: 0.75;
+}
+
+.todo-delete-btn:hover {
+    opacity: 1;
+}
+
+.todo-empty {
+    opacity: 0.8;
+    margin: 0;
+    color: var(--muted);
 }
