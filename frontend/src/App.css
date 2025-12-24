@@ -1,149 +1,245 @@
-/* ---------------------------
-   Dad Dashboard — App.css
-   --------------------------- */
-
 :root {
-    --bg1: #0b1220;
-    --bg2: #111b31;
-
-    --card: rgba(255, 255, 255, 0.08);
-    --card-2: rgba(255, 255, 255, 0.06);
-    --border: rgba(255, 255, 255, 0.14);
-
-    --text: rgba(255, 255, 255, 0.92);
-    --muted: rgba(255, 255, 255, 0.72);
-
-    --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
     --radius: 18px;
+    --gap: 20px;
+
+    --card-bg: rgba(255,255,255,0.10);
+    --card-border: rgba(255,255,255,0.18);
+
+    --text: rgba(255,255,255,0.95);
+    --muted: rgba(255,255,255,0.65);
+
+    --accent-blue: #4ea8ff;
+    --accent-purple: #8b7cff;
+    --accent-green: #41d6a4;
+    --accent-pink: #ff5fb7;
+
+    --shadow: 0 20px 40px rgba(0,0,0,0.45);
 }
 
 * {
     box-sizing: border-box;
 }
 
-html,
-body {
-    height: 100%;
-}
-
 body {
     margin: 0;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-    color: var(--text);
-    background: radial-gradient(1200px 600px at 20% 10%, #1a2a52 0%, transparent 60%),
-    radial-gradient(900px 500px at 85% 25%, #3a1f3d 0%, transparent 55%),
-    linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 100%);
+    font-family: system-ui, sans-serif;
+    min-height: 100vh;
+    color: rgba(255,255,255,0.95);
+    background: linear-gradient(
+            180deg,
+            #0b1022 0%,
+            #0e1430 35%,
+            #0c1226 70%,
+            #090d1b 100%
+    );
 }
 
-a {
-    color: inherit;
-}
-
-/* ---------------------------
-   Layout
-   --------------------------- */
 
 .dad-dashboard {
-    min-height: 100vh;
-    padding: 28px 18px 40px;
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
+    padding: 40px 20px 56px;
 }
 
 .dashboard-header {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 18px;
-    padding: 18px 18px 10px;
+    text-align: center;
+    margin-bottom: 40px;
 }
 
 .dashboard-header h1 {
-    margin: 0;
     font-size: 34px;
+    margin: 0;
     letter-spacing: -0.02em;
+    background: linear-gradient(90deg, #ffffff, #a8c7ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.dashboard-subtitle {
-    margin: 0;
-    color: var(--muted);
+.dashboard-header p {
+    margin-top: 10px;
     font-size: 15px;
+    color: var(--muted);
 }
 
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+    align-items: start;
 }
 
-/* Each widget card spans 6 cols on desktop, 12 on mobile */
 .widget-card {
-    grid-column: span 6;
-    background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
-    border: 1px solid var(--border);
+    background:
+            linear-gradient(
+                    180deg,
+                    rgba(255,255,255,0.14),
+                    rgba(255,255,255,0.06)
+            );
+    border: 1px solid var(--card-border);
     border-radius: var(--radius);
-    padding: 16px 16px 14px;
     box-shadow: var(--shadow);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(18px);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 0;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.widget-card::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    background: radial-gradient(600px 240px at 20% 0%, rgba(78,168,255,0.14), transparent 60%),
+    radial-gradient(600px 240px at 80% 10%, rgba(139,124,255,0.14), transparent 60%);
+    pointer-events: none;
+}
+
+.widget-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.widget-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
 }
 
 .widget-title {
-    margin: 0 0 12px;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.70);
 }
 
-/* Make calendar or photo album optionally bigger if you want:
-   add className="widget-card wide" to a section */
-.widget-card.wide {
-    grid-column: span 12;
+.widget-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-    .widget-card {
-        grid-column: span 12;
+@media (min-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-auto-rows: minmax(220px, auto);
+        align-items: stretch;
     }
-    .dashboard-header h1 {
-        font-size: 30px;
+
+    .widget-card.large {
+        grid-column: 1 / span 2;
+        grid-row: 1 / span 2;
+        background:
+                linear-gradient(
+                        135deg,
+                        rgba(78,168,255,0.22),
+                        rgba(139,124,255,0.16)
+                );
+        border-color: rgba(255,255,255,0.22);
+    }
+
+    .widget-stack {
+        grid-column: 3;
+        grid-row: 1 / span 2;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        height: 100%;
+        min-height: 0;
+    }
+
+    .widget-stack > .widget-card {
+        flex: 1;
+        min-height: 0;
     }
 }
 
-/* ---------------------------
-   Generic widget helpers
-   --------------------------- */
+.market-widget {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
 
-.widget-card p {
+.tradingview-widget-container {
+    flex: 1;
+    height: 100%;
+    min-height: 0;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.daily-message {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 4px;
+}
+
+.daily-message-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
     color: var(--muted);
+    opacity: 0.9;
 }
 
-button,
-input {
-    font: inherit;
+.daily-message-date {
+    font-weight: 700;
+    letter-spacing: 0.02em;
 }
 
-/* ---------------------------
-   Weather widget (matches your component classNames)
-   --------------------------- */
+.daily-message-count {
+    background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+    border: 1px solid rgba(255,255,255,0.14);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.78);
+}
+
+.daily-message-text {
+    font-size: 16px;
+    line-height: 1.55;
+    font-weight: 600;
+    padding: 14px 16px;
+    background:
+            linear-gradient(
+                    135deg,
+                    rgba(139,124,255,0.20),
+                    rgba(78,168,255,0.16)
+            );
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.16);
+    box-shadow: inset 0 0 18px rgba(0,0,0,0.18);
+}
 
 .weather-widget {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 14px;
 }
 
 .weather-header-row {
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr 1.4fr;
-    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
     font-size: 12px;
+    color: rgba(255,255,255,0.70);
+    opacity: 0.95;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.weather-header-col {
+    font-weight: 800;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.6);
-    padding: 0 4px;
 }
 
 .weather-list {
@@ -154,47 +250,54 @@ input {
 
 .weather-row {
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr 1.4fr;
-    gap: 10px;
-    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
     padding: 10px 12px;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(0, 0, 0, 0.14);
+    background:
+            linear-gradient(
+                    135deg,
+                    rgba(78,168,255,0.16),
+                    rgba(65,214,164,0.12)
+            );
+    border: 1px solid rgba(255,255,255,0.16);
+    font-size: 14px;
+    align-items: center;
+    box-shadow: inset 0 0 14px rgba(0,0,0,0.12);
 }
 
 .weather-label {
-    font-weight: 700;
+    font-weight: 800;
+    color: rgba(255,255,255,0.92);
 }
 
 .weather-location {
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(255,255,255,0.70);
+    font-weight: 600;
 }
 
 .weather-info {
     display: flex;
-    gap: 10px;
-    align-items: baseline;
-    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .weather-temp {
-    font-weight: 800;
+    font-size: 15px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.95);
 }
 
 .weather-description {
-    color: rgba(255, 255, 255, 0.72);
-    font-size: 13px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.70);
+    margin-top: -2px;
+    font-weight: 600;
 }
-
-/* ---------------------------
-   To-Do widget (from the component I gave you)
-   --------------------------- */
 
 .todo-widget {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 18px;
 }
 
 .todo-add-row {
@@ -204,128 +307,166 @@ input {
 
 .todo-input {
     flex: 1;
-    padding: 10px 12px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(255, 255, 255, 0.08);
+    padding: 11px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.08);
     color: var(--text);
+    font-size: 14px;
     outline: none;
+    box-shadow: inset 0 0 14px rgba(0,0,0,0.10);
 }
 
 .todo-input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255,255,255,0.55);
+}
+
+.todo-input:focus {
+    border-color: rgba(78,168,255,0.65);
+    box-shadow: 0 0 0 3px rgba(78,168,255,0.18), inset 0 0 14px rgba(0,0,0,0.10);
 }
 
 .todo-add-btn {
-    padding: 10px 14px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(255, 255, 255, 0.12);
-    color: var(--text);
+    padding: 11px 16px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    border: 1px solid rgba(255,255,255,0.16);
+    color: rgba(255,255,255,0.95);
+    font-weight: 800;
     cursor: pointer;
-    transition: transform 0.05s ease, background 0.15s ease;
+    transition: transform 0.18s ease, filter 0.18s ease;
+    box-shadow: 0 14px 26px rgba(0,0,0,0.25);
 }
 
-.todo-add-btn:active {
-    transform: scale(0.98);
+.todo-add-btn:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
 }
 
 .todo-controls {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .todo-filters {
     display: flex;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
 .todo-filter-btn {
-    padding: 6px 10px;
+    padding: 7px 12px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: transparent;
-    color: var(--text);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.70);
+    font-size: 13px;
     cursor: pointer;
-    opacity: 0.82;
+    transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.todo-filter-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.85);
 }
 
 .todo-filter-btn.active {
-    background: rgba(255, 255, 255, 0.14);
-    opacity: 1;
+    background: linear-gradient(135deg, rgba(139,124,255,0.95), rgba(78,168,255,0.95));
+    color: #fff;
+    border-color: transparent;
 }
 
 .todo-actions {
     display: flex;
     align-items: center;
-    gap: 10px;
-}
-
-.todo-remaining {
-    opacity: 0.85;
-    color: var(--muted);
+    gap: 12px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.70);
 }
 
 .todo-action-btn {
-    padding: 6px 10px;
+    padding: 7px 10px;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--text);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.90);
     cursor: pointer;
+    font-size: 12px;
+    transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.todo-action-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(255,255,255,0.12);
 }
 
 .todo-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
+}
+
+.todo-empty {
+    color: rgba(255,255,255,0.65);
+    font-size: 14px;
+    padding: 10px 4px;
 }
 
 .todo-item {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    padding: 10px 12px;
+    align-items: center;
+    padding: 12px 14px;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(0, 0, 0, 0.14);
+    background:
+            linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.14),
+                    rgba(255,255,255,0.06)
+            );
+    border: 1px solid rgba(255,255,255,0.14);
+    transition: transform 0.18s ease, opacity 0.18s ease, background 0.18s ease;
+}
+
+.todo-item:hover {
+    transform: translateY(-1px);
+    background:
+            linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.16),
+                    rgba(255,255,255,0.07)
+            );
+}
+
+.todo-item.done {
+    opacity: 0.6;
 }
 
 .todo-item-left {
     display: flex;
     align-items: center;
     gap: 10px;
-    cursor: pointer;
 }
 
 .todo-text {
-    line-height: 1.2;
-}
-
-.todo-item.done .todo-text {
-    text-decoration: line-through;
-    opacity: 0.7;
+    font-size: 14px;
+    color: rgba(255,255,255,0.92);
+    font-weight: 650;
 }
 
 .todo-delete-btn {
+    background: none;
     border: none;
-    background: transparent;
-    color: var(--text);
+    color: rgba(255,255,255,0.62);
     cursor: pointer;
     font-size: 16px;
-    opacity: 0.75;
+    padding: 4px;
+    transition: transform 0.18s ease, color 0.18s ease;
 }
 
 .todo-delete-btn:hover {
-    opacity: 1;
-}
-
-.todo-empty {
-    opacity: 0.8;
-    margin: 0;
-    color: var(--muted);
+    transform: scale(1.05);
+    color: rgba(255,95,183,0.95);
 }
