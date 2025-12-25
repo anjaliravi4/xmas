@@ -4,8 +4,7 @@ import React from "react";
 const FamilyCalendar: React.FC = () => {
     // From Google Calendar → Settings → Integrate calendar → "Embed code"
     const calendarSrc =
-        "https://calendar.google.com/calendar/embed?src=YOUR_CALENDAR_ID&ctz=America%2FToronto";
-
+        "https://calendar.google.com/calendar/embed?src=c34e0b577f3dbaeefdd3bf2012507f0e878f70e1d16dcb61f9270e5d9e942f9e%40group.calendar.google.com&ctz=America%2FToronto"
     return (
         <div style={{ border: "1px solid #ddd", borderRadius: "8px", overflow: "hidden" }}>
             <iframe
