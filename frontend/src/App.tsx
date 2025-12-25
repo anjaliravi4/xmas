@@ -12,8 +12,9 @@ function App() {
         <div className="dad-dashboard">
 
             <header className="dashboard-header">
-                <h1>🎄 Dad Dashboard</h1>
-                <p>A little home base for your day.</p>
+                <div className="dog dog-white idle-diagdown" />
+                <h1>Dad Dashboard</h1>
+                <div className="dog dog-black run-dir-up" />
             </header>
 
             <main className="dashboard-grid">
